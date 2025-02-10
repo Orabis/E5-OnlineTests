@@ -1,66 +1,77 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Projet Laravel - Application d'Aide pour Professeurs
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Ce projet vise à créer une application web en Laravel qui permet aux professeurs d'envoyer un fichier contenant un devoir maison (DM) en format `.docx` ou `.txt`. Le système extrait les questions, génère un lien unique pour chaque devoir, et permet aux élèves de répondre au quiz en ligne sans se connecter. Une fois le temps imparti écoulé, le lien devient inaccessible, et le professeur peut voir les réponses des élèves.
 
-## About Laravel
+## Fonctionnalités
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   **Authentification pour les professeurs**  
+    Seuls les professeurs peuvent se connecter et accéder aux fonctionnalités de gestion des DM.
+-   **Envoi et analyse des DM**  
+    Le professeur peut télécharger un fichier `.docx` ou `.txt` contenant les questions du DM. Le système analyse le fichier pour extraire les questions et sous-questions (ex : "Question 1", "Question 1.1", "Question 1.a").
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   **Génération de liens uniques pour les élèves**  
+    Une fois le fichier traité, un lien unique est généré pour chaque DM. Ce lien est accessible aux élèves sans nécessiter de connexion.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   **Réponses des élèves**  
+    Les élèves répondent aux questions en ligne, et leurs réponses sont stockées en base de données.
 
-## Learning Laravel
+-   **Fin de la période d'accès**  
+    Une fois le temps imparti écoulé, le lien devient inaccessible, et le professeur peut consulter les réponses des élèves.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Technologies
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-   **Laravel** (Backend)
+-   **PostgreSQL** (Base de données)
+-   **PHP** (Backend)
+-   **Blade** (Frontend)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Structure du Projet
 
-## Laravel Sponsors
+-   **Routes**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    -   `/`: Page d'accueil (accessible à tout le monde)
+    -   `/prof/login`: Page de connexion pour le professeur
+    -   `/prof/dashboard`: Page principale pour la gestion des DM (réservée aux profs après connexion)
+    -   `/quiz/{token}`: Page du quiz accessible aux élèves via un lien unique
 
-### Premium Partners
+-   **Base de données**
+    -   `assignments`: Table des DM envoyés par les professeurs
+    -   `links`: Table des liens uniques générés pour chaque DM
+    -   `students`: Table des réponses des élèves (enregistre les réponses aux questions du DM)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Plan de Travail (1 Semaine)
 
-## Contributing
+### Jour 1-2 : Mise en place de Laravel et structure de base
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+-   Installer Laravel et configurer la base de données
+-   Configurer l'authentification basique pour les professeurs (connexion/login)
+-   Créer les tables de base de données (`assignments`, `links`, `students`)
 
-## Code of Conduct
+### Jour 3-4 : Traitement du fichier DM
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+-   Créer une fonction qui permet au professeur de télécharger un fichier `.docx` ou `.txt`
+-   Analyser le fichier pour extraire les questions et sous-questions
+-   Gérer la numérotation des questions pour éviter les doublons
 
-## Security Vulnerabilities
+### Jour 5 : Génération des liens et système de validation
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+-   Générer un lien unique pour chaque DM
+-   Implémenter un système de durée limitée pour chaque lien (le lien devient inaccessible après un certain temps)
 
-## License
+### Jour 6 : Gestion des réponses des élèves
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+-   Créer une interface pour les élèves afin de répondre au quiz
+-   Enregistrer les réponses des élèves dans la base de données
+
+### Jour 7 : Finalisation et Tests
+
+-   Tester l'intégralité du flux (upload du fichier, génération des liens, réponses des élèves)
+-   Vérifier les différentes fonctionnalités et corriger les bugs
+-   Ajouter des commentaires et des instructions dans le code
+
+## Installation et Démarrage
+
+1. Clonez ce dépôt :
+    ```bash
+    git clone https://github.com/ton-utilisateur/ton-projet.git
+    ```
