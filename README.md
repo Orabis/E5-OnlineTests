@@ -6,7 +6,8 @@ Ce projet vise à créer une application web en Laravel qui permet aux professeu
 
 -   **Authentification pour les professeurs**  
     Seuls les professeurs peuvent se connecter et accéder aux fonctionnalités de gestion des DM.
--   **Envoi et analyse des DM**  
+
+-   **Envoi et analyse des DM**
     Le professeur peut télécharger un fichier `.docx` ou `.txt` contenant les questions du DM. Le système analyse le fichier pour extraire les questions et sous-questions (ex : "Question 1", "Question 1.1", "Question 1.a").
 
 -   **Génération de liens uniques pour les élèves**  
@@ -17,6 +18,10 @@ Ce projet vise à créer une application web en Laravel qui permet aux professeu
 
 -   **Fin de la période d'accès**  
     Une fois le temps imparti écoulé, le lien devient inaccessible, et le professeur peut consulter les réponses des élèves.
+
+-   **(Optionnel) Affichage lien tableau notes**
+    Tableau de notes avec le noms des elèves que le prof attribuera
+    Crée une interface de correction.
 
 ## Technologies
 
@@ -30,14 +35,17 @@ Ce projet vise à créer une application web en Laravel qui permet aux professeu
 -   **Routes**
 
     -   `/`: Page d'accueil (accessible à tout le monde)
-    -   `/prof/login`: Page de connexion pour le professeur
-    -   `/prof/dashboard`: Page principale pour la gestion des DM (réservée aux profs après connexion)
+    -   `/login`: Page de connexion pour le professeur
+    -   `/dashboard`: Page principale pour la gestion des DM (réservée aux profs après connexion)
+    -   `/dms`: Page pour voir les DM en cours la base
+    -   `/dms/create` Page pour crée un nouveau dm
     -   `/quiz/{token}`: Page du quiz accessible aux élèves via un lien unique
 
 -   **Base de données**
-    -   `assignments`: Table des DM envoyés par les professeurs
-    -   `links`: Table des liens uniques générés pour chaque DM
-    -   `students`: Table des réponses des élèves (enregistre les réponses aux questions du DM)
+    -   `User`: Table des professeurs
+    -   `Dm`: Table uniques générés pour chaque DM
+    -   `Questions`: Table des questions uniques, relié a dm,
+    -   ` Answers` : réponses des élèves (enregistre les réponses aux questions du DM)
 
 ## Plan de Travail (1 Semaine)
 
@@ -45,7 +53,7 @@ Ce projet vise à créer une application web en Laravel qui permet aux professeu
 
 -   Installer Laravel et configurer la base de données
 -   Configurer l'authentification basique pour les professeurs (connexion/login)
--   Créer les tables de base de données (`assignments`, `links`, `students`)
+-   Créer les tables de base de données
 
 ### Jour 3-4 : Traitement du fichier DM
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
@@ -13,10 +13,12 @@
         <h1>Welcome to the Dashboard</h1>
     </div>
     <div>
-        <form action="{{ route('prof.logout') }}" method="POST">
+        <form action="{{ route('logout') }}" method="POST">
             @csrf
             <button type="submit" class="btn btn-danger">Logout</button>
         </form>
+        <a href="{{route('dms.index')}}">Voir les dms<a>
+
     </div>
 </body>
 

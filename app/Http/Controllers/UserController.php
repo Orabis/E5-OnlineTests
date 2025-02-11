@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function showLoginForm()
+    public function index()
     {
         return view("login");
     }
     public function dashboard()
     {
-        return view('prof.dashboard');
+        return view('dashboard');
     }
     public function login(Request $request)
     {
@@ -28,13 +28,13 @@ class UserController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            return redirect()->route('prof.dashboard');
+            return redirect()->route('dashboard');
         }
         return back()->withErrors([
             'email' => 'Les identifiants sont incorrects.',
         ]);
     }
-    public function register(Request $request)
+    public function create(Request $request)
     {
         $request->validate([
             'register-name' => 'required|string|max:255',
@@ -43,6 +43,11 @@ class UserController extends Controller
 
         ], [
             'register-email.unique' => 'Cet email est déjà utilisé.',
+            'register-email.required' => "Besoin d'un email",
+            'register-email.max' => "l'email est trop long",
+            'register-name.required' => "Besoin d'un nom",
+            'register-name.max' => 'le nom est trop long',
+            'register-password.required' => 'Mot de passe requis',
             'register-password.confirmed' => 'Les mots de passe ne correspondent pas.',
             'register-password.min' => 'Le mot de passe doit contenir au moins 6 caractères',
         ]);
@@ -53,7 +58,7 @@ class UserController extends Controller
             'password' => bcrypt($request->input('register-password')),
         ]);
         Auth::login($user);
-        return redirect()->route('prof.dashboard');
+        return redirect()->route('dashboard');
     }
     public function logout()
     {
