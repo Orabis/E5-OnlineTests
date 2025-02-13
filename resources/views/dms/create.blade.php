@@ -11,7 +11,7 @@
     <h1>Créer un Devoir Maison</h1>
     <a href="{{route('dms.index')}}">Retour<a>
 
-            <form method="POST" action="{{ route('dms.store') }}">
+            <form method="POST" action="{{ route('dms.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-dm">
                     <label for="title">Titre du DM</label>
@@ -37,22 +37,11 @@
                     <br>
                 </div>
                 <div class="form-questions">
-                    <label for="q-name">Nom question</label>
-                    <input type="text" name="q-name" id="q-name" required>
-                    <fieldset>
-                        <legend>Mode de question Libre ou QCM</legend>
-                        <label>
-                            <input type="radio" name="q-type" id="q-type" value="0" checked>
-                            Libre
-                        </label>
-                        <label>
-                            <input type="radio" name="q-type" id="q-type" value="1">
-                            QCM
-                        </label>
-                    </fieldset>
-                    <label for="q-choices">Choix</label>
-                    <input type="text" name="q-choices" id="q-choices">
-                </div>
+                    <label for="q-file">Uploader les questions </label>
+                    <input type="file" id="q-file" name="q-file" accept=".txt, .docx, .csv, .doc">
+                    @error('q-type')
+                        <div class="error">{{ $message }}</div>
+                    @enderror
                 </div>
                 <button type="submit">Créer le DM</button>
             </form>
