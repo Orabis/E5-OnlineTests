@@ -21,7 +21,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dms', [DMController::class, 'index'])->name('dms.index');
     Route::get('/dms/create', [DMController::class, 'create'])->name('dms.create');
+    Route::get('/dms/{id}', [DMController::class, 'show'])->name('dms.show');
+
     Route::post('/dms', [DMController::class, 'store'])->name('dms.store');
+    Route::patch('/dms/{id}', [DMController::class, 'update'])->name('dms.update');
     Route::delete('/dms/{id}', [DMController::class, 'destroy'])->name('dms.destroy');
 
 

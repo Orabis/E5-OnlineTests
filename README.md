@@ -47,36 +47,6 @@ Ce projet vise à créer une application web en Laravel qui permet aux professeu
     -   `Questions`: Table des questions uniques, relié a dm,
     -   ` Answers` : réponses des élèves (enregistre les réponses aux questions du DM)
 
-## Plan de Travail (1 Semaine)
-
-### Jour 1-2 : Mise en place de Laravel et structure de base
-
--   Installer Laravel et configurer la base de données
--   Configurer l'authentification basique pour les professeurs (connexion/login)
--   Créer les tables de base de données
-
-### Jour 3-4 : Traitement du fichier DM
-
--   Créer une fonction qui permet au professeur de télécharger un fichier `.docx` ou `.txt`
--   Analyser le fichier pour extraire les questions et sous-questions
--   Gérer la numérotation des questions pour éviter les doublons
-
-### Jour 5 : Génération des liens et système de validation
-
--   Générer un lien unique pour chaque DM
--   Implémenter un système de durée limitée pour chaque lien (le lien devient inaccessible après un certain temps)
-
-### Jour 6 : Gestion des réponses des élèves
-
--   Créer une interface pour les élèves afin de répondre au quiz
--   Enregistrer les réponses des élèves dans la base de données
-
-### Jour 7 : Finalisation et Tests
-
--   Tester l'intégralité du flux (upload du fichier, génération des liens, réponses des élèves)
--   Vérifier les différentes fonctionnalités et corriger les bugs
--   Ajouter des commentaires et des instructions dans le code
-
 ## Installation et Démarrage
 
 1. Clonez ce dépôt :

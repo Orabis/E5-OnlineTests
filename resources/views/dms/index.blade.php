@@ -26,12 +26,9 @@
                     @foreach ($dms as $dm)
                         <div>
                             <h2>{{ $dm->title }}</h2>
-                            <p>Professeur: {{ $dm->professor->name }}</p>
+                            <p>Description:{{ $dm->description }}</p>
                             <p>Date d'expiration: {{ $dm->expire_at }}</p>
-                            @foreach ($dm->questions as $question)
-                                <p>Question: {{$question->name}}</p>
-                                <p>Choix: {{$question->choices}}</p>
-                            @endforeach
+                            <a href="{{ route('dms.show', $dm->id) }}">Voir</a>
                             <form method="POST" action="{{ route('dms.destroy', $dm->id) }}">
                                 @csrf
                                 @method('DELETE')

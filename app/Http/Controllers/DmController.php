@@ -10,14 +10,41 @@ class DmController extends Controller
 {
     public function index()
     {
-        $dms = Dm::with('professor')->get();
+        $dms = Dm::with(['professor', 'questions'])->get();
         return view('dms.index', compact('dms'));
+    }
+    public function show($id)
+    {
+        $dm = Dm::with(['professor', 'questions'])->findOrFail($id);
+        return view('dms.show', compact('dm'));
     }
     public function create()
     {
         return view('dms.create');
     }
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required|string|max:40',
+            'description' => 'nullable|string|max:255',
+            'expire_at' => 'required|date|after_or_equal:' . now(),
+        ], [
+            'title.required' => 'Un titre est requis',
+            'title.max' => 'Le titre est trop long',
+            'description.max' => 'La description est trop longue',
+            'expire_at.required' => "Date d'expiration requise",
+            'expire_at.after_or_equal' => 'La date ne peut pas être antérieure à aujourd’hui',
+        ]);
 
+        $dm = Dm::findOrFail($id);
+        $dm->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'expire_at' => $request->expire_at,
+        ]);
+
+        return redirect()->route('dms.index')->with('success', 'DM mis à jour avec succès');
+    }
     public function store(Request $request)
     {
         $request->validate([
@@ -65,7 +92,9 @@ class DmController extends Controller
                 if (empty($question)) {
                     throw new Exception("Question vide détectée.");
                 }
-                $existingQuestion = Questions::where('name', $question)->exists();
+                $existingQuestion = Questions::where('name', $question)
+                    ->where('dm_id', $dm->id)
+                    ->exists();
                 if ($existingQuestion) {
                     throw new Exception("La question $num existe déjà.");
                 }
